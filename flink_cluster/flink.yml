@@ -1,0 +1,56 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink-cluster
+spec:
+  image: flink:1.18.1
+  flinkVersion: v1_18
+  imagePullPolicy: Always
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: "12"
+    # taskmanager.memory.network.min: "64 mb"
+    # taskmanager.memory.network.max: "250 mb"
+    taskmanager.memory.network.fraction: "0.015"
+    taskmanager.memory.framework.heap.size: "512 mb"
+    #taskmanager.memory.heap.size: "512 mb"
+    taskmanager.memory.managed.size: "50 mb"
+    # # Task manager memory for flink operations
+    jobmanager.memory.jvm-metaspace.size: "1024 mb"
+    taskmanager.memory.jvm-metaspace.size: "2048 mb"
+    # high-availability.cluster-id: flink-cluster
+    # fs.allowed-fallback-filesystems: "s3"
+    job-result-store.delete-on-commit: "true"
+    state.backend.rocksdb.log.level: "ERROR_LEVEL"
+    state.backend.rocksdb.log.max-file-size: "0"
+    # state.backend.rocksdb.log.dir: 
+    # high-availability.storageDir: s3://<bucket>/<key>
+    # state.checkpoints.dir: s3://<bucket>/checkpoints
+    web.cancel.enable: "true"
+  serviceAccount: flink
+  jobManager:
+    resource:
+      memory: "4096m"
+      cpu: 2
+  taskManager:
+    resource:
+      memory: "4096m"
+      cpu: 4
+  # job:
+  #   jarURI: local:///apache-beam.jar
+  #   args: ["test", "--runner=FlinkRunner"]
+  #   parallelism: 2
+  #   upgradeMode: stateless
+  #   state: running
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-flink-ui
+spec:
+  ports:
+    - port: 80
+      targetPort: 8081
+      protocol: TCP
+  selector:
+    app: flink-cluster
+    
