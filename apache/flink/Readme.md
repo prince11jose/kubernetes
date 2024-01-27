@@ -1,18 +1,3 @@
-### Install microk8s 
-```
-sudo snap install microk8s --classic --channel=1.28
-sudo usermod -a -G microk8s $USER
-sudo chown -f -R $USER ~/.kube
-microk8s status --wait-ready
-```
-### Enable Addons
-```
-microk8s enable dns
-microk8s enable helm
-microk8s enable helm3
-microk8s enable community
-microk8s enable metrics-server
-```
 ### Install cert-manager CRD's
 ```
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml

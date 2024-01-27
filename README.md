@@ -29,7 +29,7 @@ Before you begin, ensure you have the following prerequisites installed on your 
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/prince11jose/kubernetes.git
+   git clone https://github.com/prince11jose/kubernetes-tryouts.git
    ```
 2. Navigate to the project directory:
 
@@ -37,11 +37,26 @@ Before you begin, ensure you have the following prerequisites installed on your 
 
 cd kubernetes-tryouts
 ```
+### Install microk8s 
+```
+sudo snap install microk8s --classic --channel=1.28
+sudo usermod -a -G microk8s $USER
+sudo chown -f -R $USER ~/.kube
+microk8s status --wait-ready
+```
+### Enable Addons
+```
+microk8s enable dns
+microk8s enable helm
+microk8s enable helm3
+microk8s enable community
+microk8s enable metrics-server
+```
 
 ## Follow the examples in the Examples section to start experimenting with Kubernetes.
 
 ## Examples
-Explore various examples in the examples directory to understand different aspects of Kubernetes, including:
+Explore various examples in the kubernetes-tryouts directory to understand different aspects of Kubernetes, including:
 
 Pods: Basic deployment and management of pods.
 Services: Exposing applications within a cluster.
