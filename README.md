@@ -35,7 +35,7 @@ Before you begin, ensure you have the following prerequisites installed on your 
 
 ```bash
 
-cd kubernetes-tryouts
+cd kubernetes
 ```
 
 ## Follow the examples in the Examples section to start experimenting with Kubernetes.
